@@ -1,4 +1,4 @@
 # Crosshairs
 Change your crosshair to anything you'd like
-To edit keybinds go to lines 17-21 of main.py and to add crosshairs drag them to the crosshairs folder and add them in the code (lines 67-87 for keyboard and lines 97-99 for mouse)
-IGNORE the main.py and Crosshairs uploads only use whats in CrosshairRunnable
+To edit keybinds go to binds.jso
+To add crosshairs drag them to the crosshairs folder and make sure it has the name of one of the already existing crosshairs EXCEPT FOR hide.png
