@@ -1,0 +1,8 @@
+{
+  "keybinds_default": ["1", "z", "x", "f2", "f", "x2", "x1", "3", "caps lock"],
+  "keybinds_plus": ["2", "4"],
+  "keybinds_shotgun": [],
+  "keybinds_hide": ["p", "tab"],
+  "keybinds_quit": ["f9"],
+  "keybinds_debug": ["="]
+}

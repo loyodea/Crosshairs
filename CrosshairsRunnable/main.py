@@ -1,3 +1,4 @@
+import json
 import tkinter as tk
 from PIL import Image, ImageTk
 import keyboard
@@ -13,17 +14,26 @@ background_path = 'Crosshairs/Hide.png'
 overlay_path = 'Crosshairs/Hide.png'
 transparent_color = 'black'
 # Make sure that these two are the biggest crosshair you plan on using!!!!
-hide = False
-# Add keybinds for each crosshair (add another list if needed and don't forget to add another update_window in the function on line 57!!)
-keybinds_default = ['1', 'z', 'x', 'f2', 'f', 'x2', 'x1', '3', 'caps lock']
-keybinds_plus = ['2', '4']
-keybinds_shotgun = []
-keybinds_hide = ['p', 'tab']
-keybinds_quit = ['f9']
 
-print(f'----> edit main.py lines 17-21 to change keybinds')
-print(f'----> to hide crosshair press {keybinds_hide[0]} can also be configured in main.py')
-print(f'----> to quit press {keybinds_quit[0]}')
+# Flags to either hide crosshair or print keys
+hide = False
+debug = False
+# Add keybinds for each crosshair (add another list if needed and don't forget to add another update_window in the function on line 57!!)
+with open('binds.json', 'r') as file:
+    data = json.load(file)
+keybinds_default = data['keybinds_default']
+keybinds_plus = data['keybinds_plus']
+keybinds_shotgun = ['keybinds_shotgun']
+keybinds_hide = data['keybinds_hide']
+keybinds_quit = data['keybinds_quit']
+keybinds_debug = data['keybinds_debug']
+
+print(f'----> edit binds.json to change keybinds')
+print('----> to change a crosshair simply change one of the files in the Crosshairs folder (make sure it has the same '
+      'name as one that already exists or it wont work)')
+print(f'----> to see what button you are pressing press {keybinds_debug}')
+print(f'----> to hide crosshair press {keybinds_hide} can also be configured in main.py')
+print(f'----> to quit press {keybinds_quit}')
 
 
 def update_window(background_path, overlay_path, transparent_color):
@@ -65,23 +75,31 @@ def update_window(background_path, overlay_path, transparent_color):
 # Function to handle key press event ADD MORE CROSSHAIRS HERE!!
 def on_key_event(e):
     global hide
+    global debug
+    if debug:
+        print(f'keyboard pressed: {e.name}')
     if e.name in keybinds_default and not hide:
         update_window("Crosshairs/default.png", 'Crosshairs/default.png', 'black')
 
-    if e.name in keybinds_plus and not hide:
+    elif e.name in keybinds_plus and not hide:
         update_window('Crosshairs/plus.png', 'Crosshairs/plus.png', 'black')
 
-    if e.name in keybinds_shotgun and not hide:
+    elif e.name in keybinds_shotgun and not hide:
         update_window('Crosshairs/DefaultShotgun.png', 'Crosshairs/DefaultShotgun.png', 'black')
 
-    if e.name in keybinds_hide:
+    elif e.name in keybinds_hide:
         if not hide:
             update_window('Crosshairs/Hide.png', 'Crosshairs/Hide.png', 'black')
             hide = True
         else:
             update_window("Crosshairs/default.png", 'Crosshairs/default.png', 'black')
             hide = False
-    if e.name == keybinds_quit[0]:
+    elif e.name in keybinds_debug:
+        if not debug:
+            debug = True
+        else:
+            debug = False
+    elif e.name == keybinds_quit[0]:
         root.quit()
         root.update()
 
@@ -94,6 +112,10 @@ def keyboard_listener():
 def mouse_listener():
     def on_click(x, y, button, pressed):
         global hide
+        global debug
+
+        if debug:
+            print(f'mouse pressed: {button.name}')
         if button.name in keybinds_default and not hide:
             update_window("Crosshairs/default.png", 'Crosshairs/default.png', 'black')
 
